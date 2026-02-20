@@ -271,6 +271,57 @@ Run in CI (if present) and before any script change is committed.
 
 ---
 
+## G9 — CR Status Lifecycle Management
+
+**Problem:** Codex never marks CRs as resolved. After 12 rounds, all 269 CRs show `Status: open`. The active review file should only contain unresolved items, but there's no enforcement of this.
+
+**Proposal:**
+
+**CR format extension:**
+```markdown
+### CR-NNN: <title>
+- **ID**: CR-NNN
+- **Round**: N
+- **Severity**: critical | high | medium | low
+- **Category**: correctness | reliability | security | quality | test-coverage
+- **File(s)**: path:line
+- **Status**: open | resolved | closed | superseded
+- **ResolvedIn**: Round M (optional, for resolved status)
+- **SupersededBy**: CR-PPP (optional, for superseded status)
+```
+
+**Protocol rules:**
+1. New CRs start as `Status: open`
+2. When Claude Code's response adequately addresses a CR, Codex updates it to `Status: resolved` with `ResolvedIn` pointing to the response round
+3. If a CR is no longer relevant (design changed, approach shifted), mark `Status: closed` with reason
+4. If a CR is replaced by a better-formulated one, mark `Status: superseded` with `SupersededBy`
+5. The active `ENG_REVIEW_COMMENTS.md` contains ONLY `Status: open` CRs
+6. When archiving a round, ALL CRs from that round move to the archive with their final status
+
+**Script validation:**
+```bash
+validate_review_comments() {
+  local file="$1"
+  # Count CRs with Status != open in active file
+  local non_open
+  non_open=$(grep -c "Status: \(resolved\|closed\|superseded\)" "$file" 2>/dev/null || true)
+  if [[ $non_open -gt 0 ]]; then
+    log "WARNING: Active review file contains $non_open non-open CRs — should only contain open items"
+  fi
+  
+  # Ensure CR IDs are sequential per step (no gaps, no duplicates)
+  # This catches cases where Codex renumbers or skips IDs
+}
+```
+
+**Why this matters:**
+- Claude Code can see exactly what's still pending vs. what's done
+- Prevents CR inflation (269 open CRs is unmanageable)
+- Creates a proper audit trail: archive shows full history with resolution status
+- Reduces cognitive load — open items only in active file
+
+---
+
 ## Summary Table
 
 | Guardrail | What it catches | When |
@@ -283,6 +334,7 @@ Run in CI (if present) and before any script change is committed.
 | G6 — Generic cr-fix prompt | Stale CR IDs, conflicting guidance | Prompt authoring |
 | G7 — Advance pre-flight | State stuck mid-advance, silent jq failures | Before advance runs |
 | G8 — Smoke test | Script regressions caught before runtime | Pre-commit / CI |
+| G9 — CR status lifecycle | CRs never marked resolved, active file bloat | Review file write / archive |
 
 ---
 
