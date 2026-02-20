@@ -1,5 +1,43 @@
 {
-  "mandatedSteps": [],
+  "mandatedSteps": ["22", "23", "24", "25", "26", "27"],
   "mandatedDecisions": [],
-  "note": "Steps listed here are explicitly directed by the project owner. Codex must not raise scope/plan CRs against mandated steps. Add steps here when you want a specific implementation approach enforced regardless of Codex's opinion."
+  "mandatedFeatures": [
+    {
+      "feature": "Settings page with model selection + custom API key",
+      "description": "Step 22: Settings Page with model picker (Claude + Kimi) and per-provider API key input. No AI Agent Consultation Tool.",
+      "rationale": "Users must provide their own keys and choose models. Kimi explicitly required for cheap testing.",
+      "date": "2026-02-20"
+    },
+    {
+      "feature": "State saving and reloading",
+      "description": "Step 23: Full session persistence with save/load dialogs, auto-save, session history, and fork/clone functionality.",
+      "rationale": "Research is multi-day work. Session management is table stakes for professional tools.",
+      "date": "2026-02-20"
+    },
+    {
+      "feature": "Card-based steering with recommendations",
+      "description": "Step 24: Rich card-based choice interfaces with AI-generated recommendations and confidence scores.",
+      "rationale": "Current steering is too textual. Cards with recommendations reduce cognitive load.",
+      "date": "2026-02-20"
+    },
+    {
+      "feature": "Concept/trace-based prioritization",
+      "description": "Step 25: Prioritize sources by concepts and research traces, not individual URLs. Visual concept graph.",
+      "rationale": "URL-level prioritization misses the big picture. Researchers care about concepts and coverage.",
+      "date": "2026-02-20"
+    },
+    {
+      "feature": "Professional UX with complete app functionality",
+      "description": "Step 26: Keyboard shortcuts, context menus, drag-and-drop, undo/redo, export, print, onboarding, error handling.",
+      "rationale": "This is a professional tool, not a demo. All standard desktop app functionalities required.",
+      "date": "2026-02-20"
+    },
+    {
+      "feature": "One Dark Pro visual theme",
+      "description": "Step 27: VSCode One Dark Pro theme with specific color palette (#282c34 background, vibrant accents).",
+      "rationale": "One Dark Pro signals quality and attention to detail. Differentiates from amateur tools.",
+      "date": "2026-02-20"
+    }
+  ],
+  "note": "These are example mandates from TheResearcher project. Steps and features listed here are explicitly directed by the project owner. Codex must not raise scope/plan CRs against mandated steps. Technical correctness, safety, and code quality CRs remain valid."
 }
