@@ -1,0 +1,11 @@
+{
+  "currentStep": "1",
+  "currentRound": 1,
+  "phase": "propose",
+  "status": "starting",
+  "activeAgent": "claude-code",
+  "stepsComplete": [],
+  "history": [],
+  "escalations": [],
+  "lastUpdated": "2026-01-01T00:00:00Z"
+}

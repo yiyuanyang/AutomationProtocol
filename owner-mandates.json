@@ -1,0 +1,5 @@
+{
+  "mandatedSteps": [],
+  "mandatedDecisions": [],
+  "note": "Steps listed here are explicitly directed by the project owner. Codex must not raise scope/plan CRs against mandated steps. Add steps here when you want a specific implementation approach enforced regardless of Codex's opinion."
+}

@@ -1,0 +1,8 @@
+# Agent runtime files — do not commit during active loop runs
+.agent-pid
+scripts/loop.log
+scripts/watchdog.log
+
+# Keep these in git (they're state, not secrets)
+# .review-loop-state.json
+# .agent-status.json
